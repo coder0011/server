@@ -58,6 +58,11 @@
 		 */
 		$fileList: null,
 
+		$header: null,
+		headers: [],
+
+		$footer: null,
+
 		/**
 		 * @type OCA.Files.BreadCrumb
 		 */
@@ -262,6 +267,8 @@
 			this.$container = options.scrollContainer || $(window);
 			this.$table = $el.find('table:first');
 			this.$fileList = $el.find('#fileList');
+			this.$header = $el.find('#filelist-header');
+			this.$footer = $el.find('#filelist-footer');
 
 			if (!_.isUndefined(this._filesConfig)) {
 				this._filesConfig.on('change:showhidden', function() {
@@ -408,6 +415,39 @@
 
 
 			OC.Plugins.attach('OCA.Files.FileList', this);
+
+			this.initHeadersAndFooters()
+		},
+
+		initHeadersAndFooters: function() {
+			var uid = 0;
+			var sortedHeaders = this.headers.sort((a, b) => {
+				a.order - b.order
+			})
+			var sortedFooters = this.headers.sort((a, b) => {
+				a.order - b.order
+			})
+			var uniqueIds = [];
+			sortedHeaders.forEach((header) => {
+				if (header.id) {
+					if (uniqueIds.indexOf(header.id) !== -1) {
+						return
+					}
+					uniqueIds.push(header.id)
+				}
+				this.$header.append(header.el)
+				setTimeout(() => header.render(this), 0)
+			})
+			sortedFooters.forEach((footer) => {
+				if (footer.id) {
+					if (uniqueIds.indexOf(footer.id) !== -1) {
+						return
+					}
+					uniqueIds.push(footer.id)
+				}
+				this.$fllter.append(footer.el)
+				setTimeout(() => footer.render(this), 0)
+			})
 		},
 
 		/**
@@ -1022,7 +1062,7 @@
 				if (type === OC.dialogs.FILEPICKER_TYPE_MOVE) {
 					self.move(files, targetPath, disableLoadingState);
 				}
-				self.dirInfo.dirLastCopiedTo = targetPath; 
+				self.dirInfo.dirLastCopiedTo = targetPath;
 			}, false, "httpd/unix-directory", true, actions, dialogDir);
 			event.preventDefault();
 		},
@@ -3273,7 +3313,7 @@
 
 		/**
 		 * Are all files selected?
-		 * 
+		 *
 		 * @returns {Boolean} all files are selected
 		 */
 		isAllSelected: function() {
@@ -3646,6 +3686,10 @@
 			}
 
 			return null;
+		},
+
+		registerHeader: function(header) {
+			this.headers.push(header)
 		}
 	};
 
