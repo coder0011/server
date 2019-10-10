@@ -28,13 +28,4 @@ use OCP\EventDispatcher\Event;
 
 class LoadSidebar extends Event {
 
-	private $hiddenFields = [];
-
-	public function addHiddenField(string $name, string $value): void {
-		$this->hiddenFields[$name] = $value;
-	}
-
-	public function getHiddenFields(): array {
-		return $this->hiddenFields;
-	}
 }

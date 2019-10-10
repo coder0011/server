@@ -271,8 +271,7 @@ class ViewController extends Controller {
 		$event = new LoadAdditionalScriptsEvent();
 		$this->eventDispatcher->dispatch(LoadAdditionalScriptsEvent::class, $event);
 
-		$event = new LoadSidebar();
-		$this->eventDispatcher->dispatch(LoadSidebar::class, $event);
+		$this->eventDispatcher->dispatch(LoadSidebar::class, new LoadSidebar());
 
 		$params                                = [];
 		$params['usedSpacePercent']            = (int) $storageInfo['relative'];
