@@ -62,11 +62,6 @@ class Application extends App {
 		});
 
 		$this->registerVersionBackends();
-
-		$dispatcher = $container->getServer()->getEventDispatcher();
-		$dispatcher->addListener('OCA\DAV\Connector\Sabre::addPlugin', function() {
-			$a = 'foo';
-		});
 	}
 
 	public function registerVersionBackends() {
