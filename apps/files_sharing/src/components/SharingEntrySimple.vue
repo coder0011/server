@@ -75,11 +75,17 @@ export default {
 	align-items: center;
 	height: 44px;
 	&__desc {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
 		padding: 8px;
 		line-height: 1.2em;
+		position: relative;
+		flex: 1 1;
+		min-width: 0;
+		h5 {
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			max-width: inherit;
+		}
 		p {
 			color: var(--color-text-maxcontrast);
 		}
